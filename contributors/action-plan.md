@@ -789,6 +789,8 @@ if __name__ == "__main__":
     asyncio.run(run_with_logging())
 ```
 
+This script will produce a `inference_log.jsonl` file with a detailed, structured log of the agent's execution, which can be invaluable for production monitoring and debugging.
+
 ### Evaluating Agent Performance
 
 Evaluating your agent's performance is crucial to ensure it behaves as expected and meets quality standards. Evaluation can be done interactively for debugging or systematically for regression testing.
@@ -947,5 +949,3 @@ if __name__ == "__main__":
     ```
 
 The customer support agent will call the product catalog agent to get the price of the T-shirt and provide the answer. This demonstrates a complete A2A workflow.
-
-This script will produce a `inference_log.jsonl` file with a detailed, structured log of the agent's execution, which can be invaluable for production monitoring and debugging.
