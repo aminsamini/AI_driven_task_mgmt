@@ -246,7 +246,7 @@ async def run_loop_workflow():
 
 if __name__ == "__main__":
     asyncio.run(run_loop_workflow())
-
+```
 ## 4. Custom Agent Tools
 
 While pre-built tools like `google_search` are powerful, you can extend your agent's capabilities by creating custom tools. These are essentially Python functions that your agent can learn to use.
