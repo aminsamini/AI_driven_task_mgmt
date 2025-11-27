@@ -45,9 +45,18 @@ print("✅ Runner created.")
 async def run_agent():
     # Using a fixed session ID for demonstration/testing persistence
     session_id = "test_session_001"
-    response = await runner.run_debug("What is Agent Development Kit from Google? What languages is it available in?", session_id=session_id)
-    texts = [r.output_text for r in response if hasattr(r, "output_text")]
-    print("\n".join(texts))
+    
+    while True:
+        user_input = input("How can I help you? (or type 'exit' to quit): ")
+        if user_input.lower() in ["exit", "quit"]:
+            break
+            
+        if not user_input.strip():
+            continue
+
+        response = await runner.run_debug(user_input, session_id=session_id)
+        texts = [r.output_text for r in response if hasattr(r, "output_text")]
+        print("\n".join(texts))
 
 if __name__ == "__main__":
     asyncio.run(run_agent())
