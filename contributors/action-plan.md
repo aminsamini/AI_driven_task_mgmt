@@ -436,7 +436,7 @@ import uuid
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import InMemoryRunner
-from google.adk.services.sessions import InMemorySessionService
+from google.adk.sessions import InMemorySessionService
 
 async def run_in_memory_session():
     agent = Agent(
@@ -475,7 +475,7 @@ import sqlalchemy
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import InMemoryRunner
-from google.adk.services.sessions import DatabaseSessionService
+from google.adk.sessions import DatabaseSessionService
 
 async def run_persistent_session():
     agent = Agent(
@@ -483,8 +483,8 @@ async def run_persistent_session():
         instruction="You are a helpful chatbot."
     )
 
-    # Set up the database engine (using an in-memory SQLite DB for this example)
-    engine = sqlalchemy.create_engine("sqlite:///:memory:")
+    # Set up the database engine (using a file-based SQLite DB for persistence)
+    engine = sqlalchemy.create_engine("sqlite:///task_management.db")
     session_service = DatabaseSessionService.create_tables_from_engine(engine)
     runner = InMemoryRunner(agent=agent, session_service=session_service)
 

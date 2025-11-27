@@ -103,6 +103,17 @@ This section consolidates the foundational principles that guide our development
 -   **Interoperability Standards:**
     -   **Tools:** Where possible, expose tools via the **Model Context Protocol (MCP)**.
     -   **Agents:** For inter-agent collaboration, use the **Agent2Agent (A2A) protocol**. New agents should be made discoverable via an Agent Card.
+-   **Data Storage:**
+    -   **Database:** This project uses **SQLite** for all data storage needs, including agent memory and application state.
+    -   **Persistence:** Ensure all relevant data is persisted to the SQLite database to maintain state across sessions.
+    -   **Implementation:** Use `DatabaseSessionService` with `Runner` for database interactions.
+        ```python
+        from google.adk.runners import Runner
+        from google.adk.sessions import DatabaseSessionService
+
+        session_service = DatabaseSessionService("sqlite:///task_management.db")
+        runner = Runner(agent=agent, session_service=session_service, app_name="my_app")
+        ```
 ---
 ## Documentation Standards
 All contributors (developers and AI agents) must follow these documentation practices:

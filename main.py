@@ -1,10 +1,12 @@
 import os
 from dotenv import load_dotenv
 from google.adk.agents import Agent
-from google.adk.runners import InMemoryRunner
+from google.adk.runners import Runner
 from google.adk.tools import google_search
 from google.genai import types
 import asyncio
+import sqlalchemy
+from google.adk.sessions import DatabaseSessionService
 
 # Load environment variables
 load_dotenv()
@@ -31,13 +33,19 @@ root_agent = Agent(
 
 print("✅ Root Agent defined.")
 
+# Setup Database Session Service
+session_service = DatabaseSessionService("sqlite:///task_management.db")
+print("✅ Database Session Service created.")
+
 # Runner
-runner = InMemoryRunner(agent=root_agent)
+runner = Runner(agent=root_agent, session_service=session_service, app_name="task_management_system")
 print("✅ Runner created.")
 
 
 async def run_agent():
-    response = await runner.run_debug("What is Agent Development Kit from Google? What languages is it available in?")
+    # Using a fixed session ID for demonstration/testing persistence
+    session_id = "test_session_001"
+    response = await runner.run_debug("What is Agent Development Kit from Google? What languages is it available in?", session_id=session_id)
     texts = [r.output_text for r in response if hasattr(r, "output_text")]
     print("\n".join(texts))
 
