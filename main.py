@@ -47,7 +47,7 @@ async def run_agent():
     session_id = "test_session_001"
     
     while True:
-        user_input = input("How can I help you? (or type 'exit' to quit): ")
+        user_input = input("type or write 'exit' to quit : ")
         if user_input.lower() in ["exit", "quit"]:
             break
             
