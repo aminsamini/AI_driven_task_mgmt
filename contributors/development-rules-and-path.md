@@ -115,6 +115,30 @@ This section consolidates the foundational principles that guide our development
         runner = Runner(agent=agent, session_service=session_service, app_name="my_app")
         ```
 ---
+
+## 6. Mandatory Agent Protocol
+
+### Required Pre-Action Steps
+Before making any code changes or providing analysis, the agent must:
+
+1.  **Read Context Files (in this order):**
+    -   All files in the `contributors/` folder
+    -   `documentation/development-history.md`
+    -   `documentation/development-importance.md`
+
+2.  **Understand Current State:**
+    -   Review recent changes and their rationale
+    -   Identify known issues and improvement areas
+    -   Check for related tasks or dependencies
+    -   Understand established patterns and conventions
+
+3.  **Then Proceed** with the requested modification or analysis.
+
+### Implementation
+This protocol is mandatory. All agents must acknowledge and follow these steps before taking action.
+
+---
+
 ## Documentation Standards
 All contributors (developers and AI agents) must follow these documentation practices:
 1. Change Tracking
