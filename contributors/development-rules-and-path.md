@@ -79,7 +79,7 @@ This section consolidates the foundational principles that guide our development
     -   Analyze the agent's trajectory to debug failures and inefficiencies.
 5.  **Deploy and Monitor:**
     -   Package your agent for deployment using Infrastructure as Code (e.g., Terraform).
-    -   Use the automated CI/CD pipeline to deploy to staging and then production.
+    -   Use the automated CI/CD pipeline to deploy to staging and then to production.
     -   Monitor the agent's health in production using dashboards for system and quality metrics. Follow the Observe -> Act -> Evolve loop.
 
 ---
@@ -103,3 +103,39 @@ This section consolidates the foundational principles that guide our development
 -   **Interoperability Standards:**
     -   **Tools:** Where possible, expose tools via the **Model Context Protocol (MCP)**.
     -   **Agents:** For inter-agent collaboration, use the **Agent2Agent (A2A) protocol**. New agents should be made discoverable via an Agent Card.
+---
+## Documentation Standards
+All contributors (developers and AI agents) must follow these documentation practices:
+1. Change Tracking
+File: documentation/development-history.md
+When to update: After making ANY change to the project, regardless of size.
+What to include:
+
+Date and time of change
+ID: Generate sequential ID after the last entry (format: dehi_0001, dehi_0002, etc.)
+Files modified: List all affected files
+Description: Brief explanation of what was changed and why
+Related ID: Link to related issue/task ID (if applicable)
+
+2. Issue and Improvement Tracking
+File: documentation/development-importance.md
+When to update: Whenever you identify:
+
+Bugs or issues
+Security vulnerabilities
+Performance bottlenecks
+Areas needing improvement
+Technical debt
+Important decisions or architectural considerations
+Potential risks or concerns
+
+What to include:
+
+Date discovered
+ID: Generate sequential ID after the last entry (format: deim_0001, deim_0002, etc.)
+Severity/Priority: Critical / High / Medium / Low
+Description: Detailed explanation of the issue or improvement area
+Potential impact: How this affects the project
+Suggested solutions: Proposed fixes or improvements (if any)
+Status: Found / In Progress / Solved / Improved
+Related ID: Link to related issue/task ID (if applicable)

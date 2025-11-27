@@ -1,0 +1,5 @@
+google-adk
+python-dotenv
+sqlalchemy
+chromadb
+google-generativeai
