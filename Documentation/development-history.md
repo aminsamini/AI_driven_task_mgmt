@@ -20,3 +20,8 @@
 | dehi_0016 | 2025-11-28 16:25 | `main.py`, `session_manager.py`, `cli.py` | Implemented Hybrid Session Management (Resume/New) and injected user identity into agent prompt. | N/A |
 | dehi_0017 | 2025-11-28 16:36 | `main.py`, `session_manager.py` | Attempted to fix `user_id` persistence with manual SQL update (failed). | N/A |
 | dehi_0018 | 2025-11-28 16:48 | `main.py` | Fixed `user_id` persistence by explicitly setting `session.user_id` and calling `update_session`. | N/A |
+| dehi_0019 | 2025-11-28 17:00 | `database.py`, `memory_tool.py`, `agent_setup.py`, `session_manager.py`, `main.py` | Implemented structured long-term memory feature. | deim_0012 |
+| dehi_0020 | 2025-11-28 17:05 | `memory_tool.py` | Corrected import path for `ToolContext` to fix `ModuleNotFoundError`. | N/A |
+| dehi_0021 | 2025-11-28 17:10 | `memory_tool.py`, `agent_setup.py`, `main.py` | Refactored tool creation to use `FunctionTool` wrapper instead of `@tool` decorator to align with the installed ADK version. | N/A |
+| dehi_0022 | 2025-11-28 17:15 | `memory_tool.py`, `agent_setup.py`, `main.py` | Re-applied the `FunctionTool` fix to correct a submission error. | N/A |
+| dehi_0023 | 2025-11-28 17:20 | `tool_schemas.py`, `memory_tool.py` | Refactored the `save_user_info` tool to use a Pydantic model for its arguments, resolving the AFC incompatibility. | N/A |
