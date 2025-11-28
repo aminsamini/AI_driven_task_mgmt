@@ -16,3 +16,7 @@
 | dehi_0012 | 2025-11-28 15:18 | `requirements.txt` | Downgraded `bcrypt` to version 4.0.1 to resolve `AttributeError` with `passlib`. | deim_0009 |
 | dehi_0013 | 2025-11-28 15:22 | `main.py` | Updated `session_service` calls (`get_session`, `delete_session`) to include the required `user_id` argument. | deim_0010 |
 | dehi_0014 | 2025-11-28 15:35 | `main.py` | Restored missing `from database import init_db` import to fix `NameError`. | deim_0011 |
+| dehi_0015 | 2025-11-28 15:48 | `main.py`, `config.py`, `agent_setup.py`, `session_manager.py`, `cli.py` | Refactored `main.py` into modular components for better organization and maintainability. | N/A |
+| dehi_0016 | 2025-11-28 16:25 | `main.py`, `session_manager.py`, `cli.py` | Implemented Hybrid Session Management (Resume/New) and injected user identity into agent prompt. | N/A |
+| dehi_0017 | 2025-11-28 16:36 | `main.py`, `session_manager.py` | Attempted to fix `user_id` persistence with manual SQL update (failed). | N/A |
+| dehi_0018 | 2025-11-28 16:48 | `main.py` | Fixed `user_id` persistence by explicitly setting `session.user_id` and calling `update_session`. | N/A |
