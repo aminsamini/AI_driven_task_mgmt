@@ -15,3 +15,4 @@
 | dehi_0011 | 2025-11-28 15:14 | `requirements.txt` (verified) | Installed `bcrypt` via pip to resolve `passlib.exc.MissingBackendError`. | deim_0008 |
 | dehi_0012 | 2025-11-28 15:18 | `requirements.txt` | Downgraded `bcrypt` to version 4.0.1 to resolve `AttributeError` with `passlib`. | deim_0009 |
 | dehi_0013 | 2025-11-28 15:22 | `main.py` | Updated `session_service` calls (`get_session`, `delete_session`) to include the required `user_id` argument. | deim_0010 |
+| dehi_0014 | 2025-11-28 15:35 | `main.py` | Restored missing `from database import init_db` import to fix `NameError`. | deim_0011 |
