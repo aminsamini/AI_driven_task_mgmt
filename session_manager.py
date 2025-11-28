@@ -31,3 +31,14 @@ def update_session_user_id(session_id, user_id, db_url="sqlite:///task_managemen
                 text("UPDATE sessions SET user_id = :user_id WHERE id = :session_id"),
                 {"user_id": user_id, "session_id": session_id}
             )
+
+def format_long_term_memory(memory_data: dict) -> str:
+    """Formats the long-term memory data into a string for the agent's prompt."""
+    if not memory_data:
+        return ""
+
+    formatted_memory = "Here is some information I know about you:\n"
+    for key, value in memory_data.items():
+        formatted_memory += f"- {key}: {value}\n"
+
+    return formatted_memory

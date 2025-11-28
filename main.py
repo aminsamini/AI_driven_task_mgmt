@@ -2,7 +2,7 @@ import asyncio
 import uuid
 from datetime import datetime, timedelta
 from google.adk.runners import Runner
-from database import init_db
+from database import init_db, get_long_term_memory
 import config
 import agent_setup
 import session_manager
@@ -42,11 +42,15 @@ async def run_agent():
         print(f"New session started: {session_id}")
 
     while True:
+        long_term_memory = get_long_term_memory(user.id)
+        formatted_memory = session_manager.format_long_term_memory(long_term_memory)
+
         session = await session_service.get_session(session_id=session_id, user_id=user.id, app_name="task_management_system")
         
         # Explicitly set user_id on the session object and update it
         if session:
             session.user_id = user.id
+            session.state['user_id'] = user.id
             await session_service.update_session(session=session)
 
         if session:
@@ -66,10 +70,8 @@ async def run_agent():
         if not user_input:
             continue
 
-        response = await runner.run_debug(f"User {user.first_name} ({user.email}) says: {user_input}", session_id=session_id)
-        if session:
-            session.state['user_id'] = user.id
-            await session_service.update_session(session=session)
+        prompt = f"{formatted_memory}User {user.first_name} ({user.email}) says: {user_input}"
+        response = await runner.run_debug(prompt, session_id=session_id)
 
         texts = [r.output_text for r in response if hasattr(r, "output_text")]
         cli.print_output("\n".join(texts))
