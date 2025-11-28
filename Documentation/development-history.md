@@ -20,3 +20,4 @@
 | dehi_0016 | 2025-11-28 16:25 | `main.py`, `session_manager.py`, `cli.py` | Implemented Hybrid Session Management (Resume/New) and injected user identity into agent prompt. | N/A |
 | dehi_0017 | 2025-11-28 16:36 | `main.py`, `session_manager.py` | Attempted to fix `user_id` persistence with manual SQL update (failed). | N/A |
 | dehi_0018 | 2025-11-28 16:48 | `main.py` | Fixed `user_id` persistence by explicitly setting `session.user_id` and calling `update_session`. | N/A |
+| dehi_0019 | 2025-11-28 22:35 | `database/create_tasks_table.py` | Created `tasks` table with specified columns. | N/A |
