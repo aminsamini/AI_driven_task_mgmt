@@ -1,5 +1,5 @@
 import json
-from google.adk.tools.tool import tool, ToolContext
+from google.adk.tools import tool, ToolContext
 from database import get_long_term_memory, update_long_term_memory
 
 @tool
