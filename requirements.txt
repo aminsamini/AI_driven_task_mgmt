@@ -3,3 +3,5 @@ python-dotenv
 sqlalchemy
 chromadb
 google-generativeai
+passlib
+bcrypt==4.0.1

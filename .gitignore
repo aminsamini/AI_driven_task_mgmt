@@ -1,0 +1,13 @@
+# Databases
+task_management.db
+
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.idea/
+.vscode/
