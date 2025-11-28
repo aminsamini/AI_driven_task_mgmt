@@ -1,5 +1,5 @@
 import os
-import getpass
+import sys
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.runners import Runner
@@ -50,11 +50,15 @@ print("✅ Runner created.")
 async def handle_authentication():
     """Handles the user authentication flow."""
     while True:
-        has_account = input("Do you have an account? (yes/no): ").lower()
+        print("Do you have an account? (yes/no): ", end='', flush=True)
+        has_account = sys.stdin.readline().strip().lower()
+        
         if has_account == 'yes':
             try:
-                email = input("Email: ")
-                password = getpass.getpass("Password: ")
+                print("Email: ", end='', flush=True)
+                email = sys.stdin.readline().strip()
+                print("Password (visible): ", end='', flush=True)
+                password = sys.stdin.readline().strip()
                 user = auth.authenticate_user(email, password)
                 if user:
                     print(f"Welcome back, {user.first_name}!")
@@ -65,13 +69,18 @@ async def handle_authentication():
                 print(e)
         elif has_account == 'no':
             print("Let's create an account for you.")
-            first_name = input("First Name: ")
-            last_name = input("Last Name: ")
-            email = input("Email: ")
+            print("First Name: ", end='', flush=True)
+            first_name = sys.stdin.readline().strip()
+            print("Last Name: ", end='', flush=True)
+            last_name = sys.stdin.readline().strip()
+            print("Email: ", end='', flush=True)
+            email = sys.stdin.readline().strip()
             while True:
                 try:
-                    password = getpass.getpass("Password: ")
-                    password_confirm = getpass.getpass("Confirm Password: ")
+                    print("Password (visible): ", end='', flush=True)
+                    password = sys.stdin.readline().strip()
+                    print("Confirm Password (visible): ", end='', flush=True)
+                    password_confirm = sys.stdin.readline().strip()
                     if password == password_confirm:
                         user = auth.create_user(first_name, last_name, email, password)
                         print(f"Account created successfully! Welcome, {user.first_name}!")
@@ -81,7 +90,8 @@ async def handle_authentication():
                 except ValueError as e:
                     print(e)
                     if "Email already registered" in str(e):
-                        email = input("Email: ")
+                        print("Email: ", end='', flush=True)
+                        email = sys.stdin.readline().strip()
                     continue
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
@@ -97,21 +107,23 @@ async def run_agent():
     print(f"New session started: {session_id}")
 
     while True:
-        session = await session_service.get_session(session_id=session_id, app_name="task_management_system")
+        session = await session_service.get_session(session_id=session_id, user_id=user.id, app_name="task_management_system")
         if session:
             timeout = int(os.environ.get("SESSION_TIMEOUT", 30))
             if datetime.utcnow() > session.update_time + timedelta(minutes=timeout):
                 print("Your session has expired. Please log in again.")
-                await session_service.delete_session(session_id=session_id, app_name="task_management_system")
+                await session_service.delete_session(session_id=session_id, user_id=user.id, app_name="task_management_system")
                 break
 
-        user_input = input("type or write 'exit' to quit : ")
+        print("type or write 'exit' to quit : ", end='', flush=True)
+        user_input = sys.stdin.readline().strip()
+        
         if user_input.lower() in ["exit", "quit"]:
-            await session_service.delete_session(session_id=session_id, app_name="task_management_system")
+            await session_service.delete_session(session_id=session_id, user_id=user.id, app_name="task_management_system")
             print("Session ended. Goodbye!")
             break
 
-        if not user_input.strip():
+        if not user_input:
             continue
 
         response = await runner.run_debug(f"User '{user.id}' says: {user_input}", session_id=session_id)
