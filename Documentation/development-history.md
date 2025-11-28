@@ -21,3 +21,4 @@
 | dehi_0017 | 2025-11-28 16:36 | `main.py`, `session_manager.py` | Attempted to fix `user_id` persistence with manual SQL update (failed). | N/A |
 | dehi_0018 | 2025-11-28 16:48 | `main.py` | Fixed `user_id` persistence by explicitly setting `session.user_id` and calling `update_session`. | N/A |
 | dehi_0019 | 2025-11-28 22:35 | `database/create_tasks_table.py` | Created `tasks` table with specified columns. | N/A |
+| dehi_0020 | 2025-11-28 22:58 | `database/03_11_28_2025_add_position_and_job_desc_to_users.py` | Added `position` and `job_description` columns to `users` table. | N/A |

@@ -6,7 +6,7 @@ def create_root_agent():
     root_agent = Agent(
         name="helpful_assistant",
         model="gemini-2.5-flash-lite",
-        description="A simple agent that can answer general questions.",
+        description="its a agent that can answer general questions and assist to use tools",
         instruction="You are a helpful assistant. Use Google Search for current info or if unsure.",
         tools=[google_search],
     )
