@@ -28,10 +28,16 @@ print("✅ Runner created.")
 async def generate_job_description(position):
     """Generates a job description using the AI agent."""
     response = await job_description_runner.run_debug(f"Write a job description for: {position}")
-    # Extract text from response (assuming it's a list of events or similar structure from run_debug)
-    # run_debug typically returns a list of events/responses. We need to extract the text.
-    # Based on previous usage: texts = [r.output_text for r in response if hasattr(r, "output_text")]
-    texts = [r.output_text for r in response if hasattr(r, "output_text")]
+    
+    # Extract text from response
+    texts = []
+    for event in response:
+        # Check if event has content and parts
+        if hasattr(event, 'content') and event.content and hasattr(event.content, 'parts'):
+            for part in event.content.parts:
+                if hasattr(part, 'text') and part.text:
+                    texts.append(part.text)
+    
     return "\n".join(texts).strip()
 
 async def run_agent():

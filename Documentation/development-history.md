@@ -25,3 +25,4 @@
 | dehi_0021 | 2025-11-28 23:30 | `database.py`, `agent_setup.py`, `auth.py`, `cli.py`, `main.py` | Restored `database.py` and implemented registration flow update to capture position and auto-generate job description. | N/A |
 | dehi_0022 | 2025-11-28 23:35 | `database/connection.py`, `database/models.py`, `database/__init__.py`, `database.py` | Refactored `database.py` into a modular package structure. | N/A |
 | dehi_0023 | 2025-11-28 23:45 | `agents/`, `tools/`, `main.py`, `cli.py`, `agent_setup.py`, `auth.py` | Refactored project structure: moved agents to `agents/` and tools to `tools/`. | N/A |
+| dehi_0024 | 2025-11-28 23:55 | `main.py` | Fixed job description extraction logic to correctly parse `Event` objects and removed debug prints. | N/A |
