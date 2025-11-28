@@ -1,15 +1,21 @@
 import os
+import getpass
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.runners import Runner
 from google.adk.tools import google_search
-from google.genai import types
 import asyncio
-import sqlalchemy
 from google.adk.sessions import DatabaseSessionService
+import auth
+from database import init_db
+import uuid
+from datetime import datetime, timedelta
 
 # Load environment variables
 load_dotenv()
+
+# Initialize the database
+init_db()
 
 # Setup API Key
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -41,22 +47,81 @@ print("✅ Database Session Service created.")
 runner = Runner(agent=root_agent, session_service=session_service, app_name="task_management_system")
 print("✅ Runner created.")
 
+async def handle_authentication():
+    """Handles the user authentication flow."""
+    while True:
+        has_account = input("Do you have an account? (yes/no): ").lower()
+        if has_account == 'yes':
+            try:
+                email = input("Email: ")
+                password = getpass.getpass("Password: ")
+                user = auth.authenticate_user(email, password)
+                if user:
+                    print(f"Welcome back, {user.first_name}!")
+                    return user
+                else:
+                    print("Invalid credentials. Please try again.")
+            except auth.RateLimitException as e:
+                print(e)
+        elif has_account == 'no':
+            print("Let's create an account for you.")
+            first_name = input("First Name: ")
+            last_name = input("Last Name: ")
+            email = input("Email: ")
+            while True:
+                try:
+                    password = getpass.getpass("Password: ")
+                    password_confirm = getpass.getpass("Confirm Password: ")
+                    if password == password_confirm:
+                        user = auth.create_user(first_name, last_name, email, password)
+                        print(f"Account created successfully! Welcome, {user.first_name}!")
+                        return user
+                    else:
+                        print("Passwords do not match. Please try again.")
+                except ValueError as e:
+                    print(e)
+                    if "Email already registered" in str(e):
+                        email = input("Email: ")
+                    continue
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
 
 async def run_agent():
-    # Using a fixed session ID for demonstration/testing persistence
-    session_id = "test_session_001"
-    
+    """Main function to run the agent after authentication."""
+    user = await handle_authentication()
+    if not user:
+        return
+
+    session_id = str(uuid.uuid4())
+    print(f"New session started: {session_id}")
+
     while True:
+        session = await session_service.get_session(session_id=session_id, app_name="task_management_system")
+        if session:
+            timeout = int(os.environ.get("SESSION_TIMEOUT", 30))
+            if datetime.utcnow() > session.update_time + timedelta(minutes=timeout):
+                print("Your session has expired. Please log in again.")
+                await session_service.delete_session(session_id=session_id, app_name="task_management_system")
+                break
+
         user_input = input("type or write 'exit' to quit : ")
         if user_input.lower() in ["exit", "quit"]:
+            await session_service.delete_session(session_id=session_id, app_name="task_management_system")
+            print("Session ended. Goodbye!")
             break
-            
+
         if not user_input.strip():
             continue
 
-        response = await runner.run_debug(user_input, session_id=session_id)
+        response = await runner.run_debug(f"User '{user.id}' says: {user_input}", session_id=session_id)
+        if session:
+            session.state['user_id'] = user.id
+            await session_service.update_session(session=session)
+
         texts = [r.output_text for r in response if hasattr(r, "output_text")]
         print("\n".join(texts))
+
 
 if __name__ == "__main__":
     asyncio.run(run_agent())
