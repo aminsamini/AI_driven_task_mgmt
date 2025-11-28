@@ -4,9 +4,10 @@ from datetime import datetime, timedelta
 from google.adk.runners import Runner
 from database import init_db
 import config
-import agent_setup
+from agents import create_root_agent, create_job_description_agent
 import session_manager
 import cli
+from google.adk.sessions import InMemorySessionService
 
 # Setup environment
 config.setup_environment()
@@ -15,14 +16,27 @@ config.setup_environment()
 init_db()
 
 # Setup Agent, Session Service, and Runner
-root_agent = agent_setup.create_root_agent()
+root_agent = create_root_agent()
+job_description_agent = create_job_description_agent()
+
 session_service = session_manager.create_session_service()
 runner = Runner(agent=root_agent, session_service=session_service, app_name="task_management_system")
+job_description_runner = Runner(agent=job_description_agent, session_service=InMemorySessionService(), app_name="job_desc_gen")
+
 print("✅ Runner created.")
+
+async def generate_job_description(position):
+    """Generates a job description using the AI agent."""
+    response = await job_description_runner.run_debug(f"Write a job description for: {position}")
+    # Extract text from response (assuming it's a list of events or similar structure from run_debug)
+    # run_debug typically returns a list of events/responses. We need to extract the text.
+    # Based on previous usage: texts = [r.output_text for r in response if hasattr(r, "output_text")]
+    texts = [r.output_text for r in response if hasattr(r, "output_text")]
+    return "\n".join(texts).strip()
 
 async def run_agent():
     """Main function to run the agent after authentication."""
-    user = await cli.handle_authentication()
+    user = await cli.handle_authentication(job_description_generator=generate_job_description)
     if not user:
         return
 

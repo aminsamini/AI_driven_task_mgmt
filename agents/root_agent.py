@@ -2,7 +2,7 @@ from google.adk.agents import Agent
 from google.adk.tools import google_search
 
 def create_root_agent():
-    """Defines and returns the root agent."""
+    """Creates and returns the root agent."""
     root_agent = Agent(
         name="helpful_assistant",
         model="gemini-2.5-flash-lite",

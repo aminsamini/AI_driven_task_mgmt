@@ -1,10 +1,16 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
+from .connection import Base
 
-DATABASE_URL = "sqlite:///task_management.db"
-
-Base = declarative_base()
+class User(Base):
+    __tablename__ = "users"
+    id = Column(String, primary_key=True, index=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    email = Column(String, unique=True, index=True)
+    hashed_password = Column(String)
+    position = Column(String)
+    job_description = Column(String)
 
 class Task(Base):
     __tablename__ = "tasks"
@@ -21,12 +27,3 @@ class Task(Base):
     status = Column(String, default="open")
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     created_at = Column(DateTime, default=datetime.utcnow)
-
-engine = create_engine(DATABASE_URL)
-
-def init_db():
-    Base.metadata.create_all(bind=engine)
-    print("✅ Tasks table created successfully.")
-
-if __name__ == "__main__":
-    init_db()

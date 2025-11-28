@@ -25,7 +25,7 @@ def is_valid_email(email):
 def is_strong_password(password):
     return len(password) >= 8 and any(c.isupper() for c in password) and any(c.islower() for c in password) and any(c.isdigit() for c in password)
 
-def create_user(first_name, last_name, email, password):
+def create_user(first_name, last_name, email, password, position=None, job_description=None):
     if not is_valid_email(email):
         raise ValueError("Invalid email format.")
     if not is_strong_password(password):
@@ -41,7 +41,9 @@ def create_user(first_name, last_name, email, password):
             first_name=first_name,
             last_name=last_name,
             email=email,
-            hashed_password=hashed_password
+            hashed_password=hashed_password,
+            position=position,
+            job_description=job_description
         )
         db.add(db_user)
         db.commit()

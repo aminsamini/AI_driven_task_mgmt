@@ -22,3 +22,6 @@
 | dehi_0018 | 2025-11-28 16:48 | `main.py` | Fixed `user_id` persistence by explicitly setting `session.user_id` and calling `update_session`. | N/A |
 | dehi_0019 | 2025-11-28 22:35 | `database/create_tasks_table.py` | Created `tasks` table with specified columns. | N/A |
 | dehi_0020 | 2025-11-28 22:58 | `database/03_11_28_2025_add_position_and_job_desc_to_users.py` | Added `position` and `job_description` columns to `users` table. | N/A |
+| dehi_0021 | 2025-11-28 23:30 | `database.py`, `agent_setup.py`, `auth.py`, `cli.py`, `main.py` | Restored `database.py` and implemented registration flow update to capture position and auto-generate job description. | N/A |
+| dehi_0022 | 2025-11-28 23:35 | `database/connection.py`, `database/models.py`, `database/__init__.py`, `database.py` | Refactored `database.py` into a modular package structure. | N/A |
+| dehi_0023 | 2025-11-28 23:45 | `agents/`, `tools/`, `main.py`, `cli.py`, `agent_setup.py`, `auth.py` | Refactored project structure: moved agents to `agents/` and tools to `tools/`. | N/A |

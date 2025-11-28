@@ -1,5 +1,5 @@
 import sys
-import auth
+from tools import auth
 
 def get_user_input(prompt=None):
     """Reads input from stdin with an optional prompt."""
@@ -11,7 +11,7 @@ def print_output(text):
     """Prints output to stdout."""
     print(text)
 
-async def handle_authentication():
+async def handle_authentication(job_description_generator=None):
     """Handles the user authentication flow."""
     while True:
         has_account = get_user_input("Do you have an account? (yes/no): ").lower()
@@ -33,12 +33,23 @@ async def handle_authentication():
             first_name = get_user_input("First Name: ")
             last_name = get_user_input("Last Name: ")
             email = get_user_input("Email: ")
+            position = get_user_input("Job Position: ")
+            
+            job_description = None
+            if job_description_generator and position:
+                print_output("Generating job description...")
+                try:
+                    job_description = await job_description_generator(position)
+                    print_output(f"Generated Job Description: {job_description}")
+                except Exception as e:
+                    print_output(f"Failed to generate job description: {e}")
+
             while True:
                 try:
                     password = get_user_input("Password (visible): ")
                     password_confirm = get_user_input("Confirm Password (visible): ")
                     if password == password_confirm:
-                        user = auth.create_user(first_name, last_name, email, password)
+                        user = auth.create_user(first_name, last_name, email, password, position, job_description)
                         print_output(f"Account created successfully! Welcome, {user.first_name}!")
                         return user
                     else:
