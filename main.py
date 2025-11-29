@@ -6,6 +6,7 @@ from database import init_db
 import config
 from agents import create_root_agent, create_job_description_agent
 from agents.task_agents import TaskCreationWorkflow
+from tools.task_interaction import handle_show_my_tasks
 import session_manager
 import cli
 from google.adk.sessions import InMemorySessionService
@@ -29,6 +30,7 @@ print("🎯 AI TASK MANAGEMENT SYSTEM")
 print("=" * 60)
 print("\nCommands:")
 print("  /task <description>  - Create a new task with AI assistance")
+print("  /show_my_tasks       - View and manage your tasks interactively")
 print("  /help                - Show this help message")
 print("  /exit or /quit       - Exit the application")
 print("\nExamples:")
@@ -108,6 +110,10 @@ async def run_agent():
             workflow = TaskCreationWorkflow(user.id)
             result = await workflow.run(task_description)
             cli.print_output(result)
+            continue
+
+        if user_input == "/show_my_tasks":
+            handle_show_my_tasks(user.id)
             continue
 
         response = await runner.run_debug(f"User {user.first_name} ({user.email}) says: {user_input}", session_id=session_id)

@@ -27,3 +27,5 @@
 | dehi_0023 | 2025-11-28 23:45 | `agents/`, `tools/`, `main.py`, `cli.py`, `agent_setup.py`, `auth.py` | Refactored project structure: moved agents to `agents/` and tools to `tools/`. | N/A |
 | dehi_0024 | 2025-11-28 23:55 | `main.py` | Fixed job description extraction logic to correctly parse `Event` objects and removed debug prints. | N/A |
 | dehi_0025 | 2025-11-29 19:10 | `tools/task_tools.py`, `agents/task_agents.py`, `main.py`, `tools/__init__.py` | Implemented multi-agent task creation system with `/task` command. Fixed circular import in `tools/__init__.py`. | deim_0012 |
+| dehi_0026 | 2025-11-29 20:30 | `tools/task_interaction.py`, `main.py` | Implemented interactive task management tool `/show_my_tasks` with list, detail, and status update views. | N/A |
+| dehi_0026 | 2025-11-29 20:30 | `tools/task_interaction.py`, `main.py` | Implemented interactive task management tool `/show_my_tasks` with list, detail, and status update views. | N/A |

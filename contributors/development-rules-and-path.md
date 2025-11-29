@@ -174,3 +174,14 @@ Potential impact: How this affects the project
 Suggested solutions: Proposed fixes or improvements (if any)
 Status: Found / In Progress / Solved / Improved
 Related ID: Link to related issue/task ID (if applicable)
+
+---
+
+## 7. Command Reference
+
+The system supports the following commands in the main application loop:
+
+-   `/task <description>`: Creates a new task using AI agents. The agents will predict the deadline, find the best assignee, generate a title and description, and assess priority.
+-   `/show_my_tasks`: Launches an interactive menu to view and manage tasks assigned to the current user. You can view details and update task status.
+-   `/help`: Displays the list of available commands.
+-   `/exit` or `/quit`: Terminates the session and closes the application.
