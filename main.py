@@ -116,6 +116,14 @@ async def run_agent():
             handle_show_my_tasks(user.id)
             continue
 
+        if user_input == "/help":
+            print("\nCommands:")
+            print("  /task <description>  - Create a new task with AI assistance")
+            print("  /show_my_tasks       - View and manage your tasks interactively")
+            print("  /help                - Show this help message")
+            print("  /exit or        - Exit the application")
+            continue
+
         response = await runner.run_debug(f"User {user.first_name} ({user.email}) says: {user_input}", session_id=session_id)
         if session:
             session.state['user_id'] = user.id

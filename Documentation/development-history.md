@@ -29,3 +29,4 @@
 | dehi_0025 | 2025-11-29 19:10 | `tools/task_tools.py`, `agents/task_agents.py`, `main.py`, `tools/__init__.py` | Implemented multi-agent task creation system with `/task` command. Fixed circular import in `tools/__init__.py`. | deim_0012 |
 | dehi_0026 | 2025-11-29 20:30 | `tools/task_interaction.py`, `main.py` | Implemented interactive task management tool `/show_my_tasks` with list, detail, and status update views. | N/A |
 | dehi_0026 | 2025-11-29 20:30 | `tools/task_interaction.py`, `main.py` | Implemented interactive task management tool `/show_my_tasks` with list, detail, and status update views. | N/A |
+| dehi_0027 | 2025-11-29 21:55 | `main.py` | Implemented `/help` command handler to display available commands. | N/A |
