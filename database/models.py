@@ -20,8 +20,8 @@ class Task(Base):
     description = Column(String)
     assign_by = Column(String)  # User ID
     assignee = Column(String)   # User ID
-    importance = Column(String)
-    priority = Column(String)
+    importance = Column(String) # between 1-5 
+    priority = Column(String)   # between 1-5
     deadline = Column(DateTime)
     suggestions = Column(String)
     status = Column(String, default="open")

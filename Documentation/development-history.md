@@ -26,3 +26,4 @@
 | dehi_0022 | 2025-11-28 23:35 | `database/connection.py`, `database/models.py`, `database/__init__.py`, `database.py` | Refactored `database.py` into a modular package structure. | N/A |
 | dehi_0023 | 2025-11-28 23:45 | `agents/`, `tools/`, `main.py`, `cli.py`, `agent_setup.py`, `auth.py` | Refactored project structure: moved agents to `agents/` and tools to `tools/`. | N/A |
 | dehi_0024 | 2025-11-28 23:55 | `main.py` | Fixed job description extraction logic to correctly parse `Event` objects and removed debug prints. | N/A |
+| dehi_0025 | 2025-11-29 19:10 | `tools/task_tools.py`, `agents/task_agents.py`, `main.py`, `tools/__init__.py` | Implemented multi-agent task creation system with `/task` command. Fixed circular import in `tools/__init__.py`. | deim_0012 |

@@ -5,6 +5,7 @@ from google.adk.runners import Runner
 from database import init_db
 import config
 from agents import create_root_agent, create_job_description_agent
+from agents.task_agents import TaskCreationWorkflow
 import session_manager
 import cli
 from google.adk.sessions import InMemorySessionService
@@ -24,6 +25,17 @@ runner = Runner(agent=root_agent, session_service=session_service, app_name="tas
 job_description_runner = Runner(agent=job_description_agent, session_service=InMemorySessionService(), app_name="job_desc_gen")
 
 print("✅ Runner created.")
+print("🎯 AI TASK MANAGEMENT SYSTEM")
+print("=" * 60)
+print("\nCommands:")
+print("  /task <description>  - Create a new task with AI assistance")
+print("  /help                - Show this help message")
+print("  /exit or /quit       - Exit the application")
+print("\nExamples:")
+print("  /task Fix the authentication bug in the login module")
+print("  /task Prepare Q4 financial report with charts and analysis")
+print("  What's the weather today?")
+print("=" * 60 + "\n")
 
 async def generate_job_description(position):
     """Generates a job description using the AI agent."""
@@ -84,6 +96,18 @@ async def run_agent():
             break
 
         if not user_input:
+            continue
+
+        if user_input.startswith("/task"):
+            task_description = user_input[5:].strip()
+            if not task_description:
+                cli.print_output("Please provide a task description after /task.")
+                continue
+            
+            cli.print_output("Initializing Task Creation Agents...")
+            workflow = TaskCreationWorkflow(user.id)
+            result = await workflow.run(task_description)
+            cli.print_output(result)
             continue
 
         response = await runner.run_debug(f"User {user.first_name} ({user.email}) says: {user_input}", session_id=session_id)
