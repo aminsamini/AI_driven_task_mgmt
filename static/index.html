@@ -105,6 +105,53 @@
             <div id="pagination" class="flex justify-center items-center gap-2 mt-6">
                 <!-- Pagination controls will be injected here -->
             </div>
+
+            <!-- Task Details Modal -->
+            <div id="task-modal"
+                class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50 flex items-center justify-center">
+                <div class="relative p-5 border w-full max-w-lg shadow-lg rounded-xl bg-white">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-gray-900" id="modal-title">Task Details</h3>
+                        <!-- <button onclick="app.closeModal()" class="text-gray-400 hover:text-gray-500 focus:outline-none">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button> -->
+                    </div>
+                    <div class="mt-2 space-y-4">
+                        <div>
+                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</span>
+                            <p id="modal-task-title" class="text-lg font-medium text-gray-900 mt-1"></p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <span
+                                    class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Priority</span>
+                                <div id="modal-priority" class="mt-1"></div>
+                            </div>
+                            <div>
+                                <span
+                                    class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Deadline</span>
+                                <p id="modal-deadline" class="text-sm text-gray-700 mt-1"></p>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Assignee</span>
+                            <p id="modal-assignee" class="text-sm text-gray-700 mt-1"></p>
+                        </div>
+                        <div>
+                            <span
+                                class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Description</span>
+                            <p id="modal-description" class="text-sm text-gray-600 mt-1 whitespace-pre-wrap"></p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="app.closeModal()"
+                            class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="/static/app.js"></script>

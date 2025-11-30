@@ -87,7 +87,8 @@ const app = {
 
         paginatedTasks.forEach(task => {
             const div = document.createElement('div');
-            div.className = 'bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100';
+            div.className = 'bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100 cursor-pointer';
+            div.onclick = () => app.openModal(task);
             div.innerHTML = `
                 <div class="flex justify-between items-start mb-4">
                     <span class="text-lg font-semibold text-gray-800 line-clamp-1" title="${task.title}">${task.title}</span>
@@ -109,6 +110,31 @@ const app = {
         });
 
         app.renderPagination(totalPages);
+    },
+
+    openModal: (task) => {
+        const modal = document.getElementById('task-modal');
+        document.getElementById('modal-task-title').textContent = task.title;
+
+        const priorityBadge = document.createElement('span');
+        priorityBadge.className = `px-2 py-1 rounded text-xs font-medium ${app.getPriorityClass(task.priority)}`;
+        priorityBadge.textContent = `P${task.priority}`;
+        const priorityContainer = document.getElementById('modal-priority');
+        priorityContainer.innerHTML = '';
+        priorityContainer.appendChild(priorityBadge);
+
+        document.getElementById('modal-deadline').textContent = task.deadline || 'No deadline';
+        document.getElementById('modal-assignee').textContent = task.assignee_name || task.assignee;
+        document.getElementById('modal-description').textContent = task.description;
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    },
+
+    closeModal: () => {
+        const modal = document.getElementById('task-modal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore scrolling
     },
 
     renderPagination: (totalPages) => {
