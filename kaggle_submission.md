@@ -1,6 +1,6 @@
-**Title:** Agentic Task Management: AI-Powered Productivity for Teams
+**Title:** AI Task Manager: Your Intelligent Web-Based Workflow Assistant
 
-**Subtitle:** Simplify your team's workflow with an intelligent agent that automates task creation and organization directly from your command line.
+**Subtitle:** An AI-powered agent that transforms natural language descriptions into well-structured tasks, now with a seamless web interface for intuitive task management.
 
 ### Problem Statement
 
@@ -11,44 +11,44 @@ In the fast-paced environment of small businesses and teams, effective task mana
 An agent-based approach is the ideal solution to this problem because it introduces a layer of intelligence and automation that traditional systems lack. Instead of relying on rigid forms and manual input, our system leverages a sophisticated AI agent to interpret natural language commands and context. When a user simply types a description of what needs to be done, the agent takes over, intelligently parsing the information to populate all the necessary fields, including title, description, priority, and importance.
 
 This method offers several key advantages:
-- **Reduced Friction:** Users can create tasks in a matter of seconds, without ever leaving their command-line interface. This streamlined process minimizes disruptions and makes it easier to capture tasks as they arise.
+- **Reduced Friction:** Users can create tasks in a matter of seconds, without ever leaving their web browser. This streamlined process minimizes disruptions and makes it easier to capture tasks as they arise.
 - **Enhanced Accuracy:** The agent is designed to make informed judgments about task details, such as priority and importance, based on the context provided. This leads to more consistent and reliable task categorization.
 - **Improved Focus:** By automating the administrative aspects of task management, the system allows team members to concentrate on their core responsibilities, boosting overall productivity.
 - **Actionable Insights:** With a well-organized and consistently categorized task list, it becomes easier to generate insightful analytics and reports, helping teams to better understand their workflow and identify areas for improvement.
 
 ### What you created
 
-We have developed a powerful, command-line-based task management system designed to streamline workflows for small businesses and teams. At the heart of this system is an intelligent agent, built using Google's Agent Development Kit (ADK), that simplifies the entire task creation process. Users can interact with the system through a simple and intuitive command-line interface (CLI), allowing for seamless integration into their existing development environments.
+We have engineered a comprehensive task management solution that combines the power of an intelligent AI agent with the convenience of a modern web interface. Built with Google's Agent Development Kit (ADK), our system is designed to streamline workflows for teams and small businesses by automating the most tedious aspects of task creation and organization.
 
-The overall architecture consists of three main components:
-- **Command-Line Interface (CLI):** The CLI serves as the primary user interface, enabling users to create accounts, log in, and manage tasks with simple commands. It is designed to be both powerful and easy to use, with a focus on minimizing disruptions to the user's workflow.
-- **Agent-Based Backend:** The backend is powered by a sophisticated AI agent that handles all the heavy lifting of task creation and management. When a user enters a task description, the agent intelligently parses the text to determine the title, description, priority, and importance, and then creates the task in the database.
-- **Database:** The system uses a SQLite database, managed with SQLAlchemy, to store all user and task information. This provides a robust and reliable foundation for the application, ensuring that all data is stored securely and can be easily accessed when needed.
+The architecture is composed of three core components:
+
+- **Web Interface:** A sleek and intuitive frontend, built with HTML, Tailwind CSS, and vanilla JavaScript, provides a user-friendly experience for managing tasks. Users can register, log in, create new tasks with natural language, view their task lists, and update task statuses—all from a clean and responsive interface.
+- **Agent-Powered API Backend:** The backend is a robust API built with FastAPI, which serves the web interface and handles all business logic. At its core is the AI agent, which processes natural language task descriptions, intelligently extracts details like title, priority, and importance, and populates the database accordingly. This agent-powered approach eliminates the need for manual data entry and ensures that tasks are consistently well-defined.
+- **Database:** A SQLite database, managed with SQLAlchemy, serves as the data storage layer for all user and task information. This provides a reliable and efficient foundation for the application, ensuring data integrity and security.
 
 ### Demo
 
-A typical user interaction with the system is designed to be as seamless and intuitive as possible. Here's a step-by-step walkthrough of a user's journey:
+The user journey is designed to be as intuitive and frictionless as possible, allowing users to move from idea to execution in just a few clicks. Here's a walkthrough of the experience:
 
-1. **Authentication:** The user begins by launching the application and is prompted to either log in or create a new account. The authentication process is secure and straightforward, ensuring that only authorized users can access the system.
-2. **Task Creation:** Once logged in, the user can create a new task by simply typing the `/task` command followed by a brief description. For example: `/task Fix the authentication bug in the login module.` The AI agent then processes this input, automatically creating a new task with all the relevant details.
-3. **Viewing Tasks:** To see a list of their current tasks, the user can type the `/show_my_tasks` command. This will display a clean, easy-to-read list of all tasks assigned to them.
-4. **Viewing Task Details:** From the task list, the user can select a specific task to view its details, including the title, description, status, priority, and importance.
-5. **Changing Task Status:** The user can easily update the status of a task—for example, from "open" to "in_progress"—by selecting the "Change Status" option from the task details view.
+1. **Registration and Login:** New users are greeted with a clean and simple registration form where they can create an account in seconds. Returning users can log in using their credentials to access their personalized task dashboard.
+2. **Task Creation with AI:** Once logged in, the user can create a new task by simply typing a natural language description into the input field—for example, "Draft the quarterly marketing report and send it to the management team by next Friday." The AI agent then processes this input, automatically creating a new task with all the relevant details.
+3. **Task Dashboard:** The main dashboard displays a comprehensive list of tasks, which can be filtered to show tasks "Assigned to Me" or "Assigned by Me." Each task is presented in a clean, card-based layout, showing the title, priority, deadline, and assignee at a glance.
+4. **Task Details and Status Updates:** Clicking on a task opens a detailed modal view, where the user can see the full description, priority, importance, and other relevant information. If the user is the assignee, they can easily update the task's status—from "Open" to "In Progress," "Completed," or "Blocked"—using a simple dropdown menu.
 
 ### The Build
 
-Our AI Task Management System was built using a carefully selected stack of modern and robust technologies:
-- **Google's Agent Development Kit (ADK):** The core of our system is built on the ADK, which provides the foundation for our intelligent agent. The ADK allowed us to rapidly develop and deploy a sophisticated agent capable of understanding and processing natural language commands.
-- **SQLAlchemy:** We used SQLAlchemy to manage our SQLite database, providing a powerful and flexible Object-Relational Mapping (ORM) that simplified database interactions and ensured data integrity.
-- **bcrypt:** For user authentication, we integrated the `bcrypt` library to securely hash and store user passwords, protecting against unauthorized access.
-- **Python:** The entire application is written in Python, chosen for its simplicity, readability, and extensive ecosystem of libraries and frameworks.
+Our AI Task Management System was built on a modern and robust technology stack, carefully chosen to deliver a seamless and intelligent user experience:
+
+- **Backend:** The core of our application is powered by **Python**, with the **FastAPI** framework providing a high-performance API. The intelligent agent is built on **Google's Agent Development Kit (ADK)**, which enables the natural language processing capabilities that make our system unique. We use **SQLAlchemy** as the ORM to interact with our **SQLite** database, and **bcrypt** for secure password hashing.
+- **Frontend:** The user interface is a clean and responsive single-page application built with **HTML**, **vanilla JavaScript**, and styled with **Tailwind CSS**. This combination allows for a fast, modern, and intuitive user experience without the overhead of a large frontend framework.
 
 ### If I had more time, this is what I'd do
 
-While our current system provides a powerful and intuitive solution for task management, there are several exciting features and enhancements we would love to add in the future:
-- **Advanced Analytics:** We would develop an analysis agent capable of generating insightful charts and reports from the task data, helping teams to visualize their progress and identify bottlenecks.
-- **Enhanced User Interface:** We would create a full-featured graphical user interface (GUI) to complement the existing CLI, providing a more visual and interactive experience.
-- **Gamification and Encouragement:** To boost motivation and engagement, we would introduce gamification elements, such as achievements and rewards, for completing tasks and meeting goals.
-- **Eisenhower Matrix Integration:** We would implement the Eisenhower Matrix to help users prioritize tasks based on urgency and importance, further enhancing productivity.
-- **Collaboration Features:** We would add a commenting system to allow for seamless communication and collaboration on tasks, as well as a quality rating system to provide feedback on completed work.
-- **Meeting Builder:** We would create a tool to help users organize meetings based on task discussions and action items, ensuring that all meetings are productive and outcome-oriented.
+Our vision for the AI Task Management System extends far beyond its current capabilities. Here are some of the exciting features we would love to build next:
+
+- **Google Calendar Integration:** To help users stay on top of their deadlines, we would integrate the Google Calendar API to automatically sync task deadlines with their personal calendars.
+- **Advanced Task Filtering and Search:** We would implement a powerful search and filtering system, allowing users to quickly find tasks based on keywords, dates, priority, or assignee.
+- **Agentic Analysis Creator:** We would build an advanced analysis agent that can generate insightful charts and reports, such as the Eisenhower Matrix, to help users visualize their workflow and make data-driven decisions.
+- **Gamification and Encouragement:** To boost motivation and engagement, we would introduce gamification elements like achievements, progress tracking, and rewards for completing tasks and reaching goals.
+- **Collaboration Tools:** We would enhance team collaboration by adding features like task commenting, @mentions, and a system for rating the quality of completed tasks to provide constructive feedback.
+- **Task Archiving:** To keep the dashboard clean and focused, we would add the ability to archive completed or outdated tasks, while still keeping them accessible for future reference.
