@@ -101,15 +101,17 @@ const app = {
         const assignedByMeBtn = document.getElementById('tab-assigned-by-me');
 
         if (tab === 'assigned_to_me') {
-            assignedToMeBtn.classList.add('border-primary', 'text-primary');
-            assignedToMeBtn.classList.remove('border-transparent', 'text-gray-500');
-            assignedByMeBtn.classList.remove('border-primary', 'text-primary');
-            assignedByMeBtn.classList.add('border-transparent', 'text-gray-500');
+            assignedToMeBtn.classList.remove('text-stone-400', 'border-transparent');
+            assignedToMeBtn.classList.add('text-blue-600', 'border-blue-500', 'bg-blue-50');
+
+            assignedByMeBtn.classList.add('text-stone-400', 'border-transparent');
+            assignedByMeBtn.classList.remove('text-blue-600', 'border-blue-500', 'bg-blue-50');
         } else {
-            assignedByMeBtn.classList.add('border-primary', 'text-primary');
-            assignedByMeBtn.classList.remove('border-transparent', 'text-gray-500');
-            assignedToMeBtn.classList.remove('border-primary', 'text-primary');
-            assignedToMeBtn.classList.add('border-transparent', 'text-gray-500');
+            assignedByMeBtn.classList.remove('text-stone-400', 'border-transparent');
+            assignedByMeBtn.classList.add('text-blue-600', 'border-blue-500', 'bg-blue-50');
+
+            assignedToMeBtn.classList.add('text-stone-400', 'border-transparent');
+            assignedToMeBtn.classList.remove('text-blue-600', 'border-blue-500', 'bg-blue-50');
         }
 
         app.loadTasks();
