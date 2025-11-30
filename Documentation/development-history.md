@@ -68,3 +68,4 @@
 | dehi_0035 | 2025-11-30 21:05 | `static/app.js` | Fixed a bug where `assignee_id` was used instead of `assignee` in `app.js`, preventing status updates by the assignee. | N/A |
 | dehi_0036 | 2025-11-30 21:15 | `static/index.html`, `static/assets/background.png` | Moved `background.png` to `static/assets` and set it as the app background in `index.html`. | N/A |
 | dehi_0037 | 2025-11-30 21:25 | `server.py`, `tools/task_tools.py` | Implemented backend validation for task status updates. Now checks if the requesting user is the assignee before allowing status changes. | deim_0016 |
+| dehi_0038 | 2025-11-30 21:35 | `static/index.html` | Refactored background image to use a fixed `div` with `opacity-50` to apply transparency to the background without affecting content. Restored `index.html` after a corruption issue. | N/A |
