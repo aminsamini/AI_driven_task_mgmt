@@ -108,7 +108,10 @@ async def run_agent():
             cli.print_output("Initializing Task Creation Agents...")
             workflow = TaskCreationWorkflow(user.id)
             result = await workflow.run(task_description)
-            cli.print_output(result)
+            if isinstance(result, dict):
+                cli.print_output(result['message'])
+            else:
+                cli.print_output(result)
             continue
 
         if user_input == "/show_my_tasks":

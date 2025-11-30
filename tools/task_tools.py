@@ -65,3 +65,33 @@ def save_task_to_db(title, description, assign_by, assignee_id, importance, prio
         return f"Error creating task: {e}"
     finally:
         session.close()
+
+def get_all_tasks():
+    """
+    Retrieves all tasks from the database.
+    """
+    session = SessionLocal()
+    try:
+        tasks = session.query(Task).all()
+        task_list = []
+        for task in tasks:
+            task_list.append({
+                "id": task.id,
+                "title": task.title,
+                "description": task.description,
+                "assign_by": task.assign_by,
+                "assignee": task.assignee,
+                "importance": task.importance,
+                "priority": task.priority,
+                "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S") if task.deadline else None,
+                "suggestions": task.suggestions,
+                "status": task.status,
+                "created_at": task.created_at.strftime("%Y-%m-%d %H:%M:%S"),
+                "updated_at": task.updated_at.strftime("%Y-%m-%d %H:%M:%S")
+            })
+        return task_list
+    except Exception as e:
+        print(f"Error fetching tasks: {e}")
+        return []
+    finally:
+        session.close()

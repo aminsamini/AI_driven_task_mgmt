@@ -144,7 +144,7 @@ class TaskCreationWorkflow:
         suggestions = extract_text(suggestion_resp)
 
         # 6. Save to DB
-        result = save_task_to_db(
+        result_msg = save_task_to_db(
             title=title,
             description=description,
             assign_by=self.user_id,
@@ -155,4 +155,18 @@ class TaskCreationWorkflow:
             suggestions=suggestions
         )
         
-        return result
+        # Find assignee name
+        assignee_name = "Unknown"
+        for c in candidates:
+            if c['id'] == assignee_id:
+                assignee_name = c['name']
+                break
+        if assignee_name == "Unknown" and assignee_id == self.user_id:
+             assignee_name = "You"
+
+        return {
+            "status": "success",
+            "message": result_msg,
+            "assignee_name": assignee_name,
+            "task_title": title
+        }
