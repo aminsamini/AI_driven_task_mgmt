@@ -41,3 +41,6 @@
 | dehi_0037 | 2025-11-30 21:25 | `server.py`, `tools/task_tools.py` | Implemented backend validation for task status updates. Now checks if the requesting user is the assignee before allowing status changes. | deim_0016 |
 | dehi_0038 | 2025-11-30 21:35 | `static/index.html` | Refactored background image to use a fixed `div` with `opacity-50` to apply transparency to the background without affecting content. Restored `index.html` after a corruption issue. | N/A |
 | dehi_0039 | 2025-11-30 21:50 | `static/index.html`, `static/app.js` | Implemented Auth Feedback (toasts), Registration Rules (mandatory position), and Task Tabs (Assigned to/by Me) with client-side filtering. | deim_0017 |
+| dehi_0040 | 2025-11-30 22:15 | `static/index.html`, `static/app.js` | Added "Importance" field to the Task Details modal, displaying it with a color-coded badge similar to Priority. | N/A |
+| dehi_0041 | 2025-11-30 22:25 | `static/index.html` | Attempted to fix `index.html` corruption but inadvertently created a nested document. | N/A |
+| dehi_0042 | 2025-11-30 22:30 | `static/index.html` | Completely overwrote `index.html` with a clean version to resolve the nested HTML issue and ensure the task list and modal render correctly. | N/A |

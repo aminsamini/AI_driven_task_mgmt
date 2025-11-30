@@ -1,50 +1,25 @@
-2025-11-30 17:46:18,596 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 17:46:18,596 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 17:46:21,318 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 17:46:21,333 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 1c74a0ba-bd2c-4f2b-844d-d578b2d5fdb9
-2025-11-30 17:46:22,938 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 17:46:22,938 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 17:46:25,261 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 17:46:25,266 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: 38354300-4881-4be5-a073-3a7d7d6741d3
-2025-11-30 17:46:25,267 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 1c74a0ba-bd2c-4f2b-844d-d578b2d5fdb9
-2025-11-30 17:46:26,907 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 17:46:26,907 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 17:46:29,645 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 17:46:29,651 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: details_agent, event id: 745204c2-218e-4375-9aeb-59b9962080e2
-2025-11-30 17:46:29,651 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: 38354300-4881-4be5-a073-3a7d7d6741d3
-2025-11-30 17:46:29,651 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 1c74a0ba-bd2c-4f2b-844d-d578b2d5fdb9
-2025-11-30 17:46:31,442 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 17:46:31,442 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 17:46:33,581 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 17:46:33,586 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: priority_agent, event id: e9b584f4-9857-41aa-90b3-cf00c80a3b5c
-2025-11-30 17:46:33,587 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: details_agent, event id: 745204c2-218e-4375-9aeb-59b9962080e2
-2025-11-30 17:46:33,587 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: 38354300-4881-4be5-a073-3a7d7d6741d3
-2025-11-30 17:46:33,587 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 1c74a0ba-bd2c-4f2b-844d-d578b2d5fdb9
-2025-11-30 17:46:35,479 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 17:46:35,479 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 17:46:39,160 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 19:32:59,313 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 19:32:59,315 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 19:33:01,311 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 19:33:01,337 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: bb607791-ceb8-492b-910e-1f6df6fa29c1
-2025-11-30 19:33:05,467 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 19:33:05,467 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 19:33:07,639 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 19:33:07,646 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: 1669f9f1-45b5-4b7a-b279-41eef21c7de4
-2025-11-30 19:33:07,646 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: bb607791-ceb8-492b-910e-1f6df6fa29c1
-2025-11-30 19:33:11,558 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 19:33:11,559 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 19:33:14,246 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 19:33:14,255 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: details_agent, event id: c8cd44ea-ac34-44d3-afc4-71c81ddb248b
-2025-11-30 19:33:14,256 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: 1669f9f1-45b5-4b7a-b279-41eef21c7de4
-2025-11-30 19:33:14,256 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: bb607791-ceb8-492b-910e-1f6df6fa29c1
-2025-11-30 19:33:17,772 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 19:33:17,772 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 19:33:20,802 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
-2025-11-30 19:33:20,815 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: priority_agent, event id: 2ee49093-c8c7-4699-845c-004cf5940261
-2025-11-30 19:33:20,815 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: details_agent, event id: c8cd44ea-ac34-44d3-afc4-71c81ddb248b
-2025-11-30 19:33:20,815 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: 1669f9f1-45b5-4b7a-b279-41eef21c7de4
-2025-11-30 19:33:20,816 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: bb607791-ceb8-492b-910e-1f6df6fa29c1
-2025-11-30 19:33:24,868 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
-2025-11-30 19:33:24,869 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
-2025-11-30 19:33:30,133 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+2025-11-30 22:29:58,979 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-11-30 22:29:58,980 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-30 22:30:03,888 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+2025-11-30 22:30:03,894 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 0a905954-dfe0-420f-acce-c9ce149a076c
+2025-11-30 22:30:04,923 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-11-30 22:30:04,923 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-30 22:30:07,452 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+2025-11-30 22:30:07,455 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: a2eb0323-cd0d-4362-b4a3-bfdc71e4119d
+2025-11-30 22:30:07,455 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 0a905954-dfe0-420f-acce-c9ce149a076c
+2025-11-30 22:30:08,391 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-11-30 22:30:08,391 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-30 22:30:10,625 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+2025-11-30 22:30:10,628 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: details_agent, event id: 33fcab3d-4145-4b05-98a2-789b92907bab
+2025-11-30 22:30:10,628 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: a2eb0323-cd0d-4362-b4a3-bfdc71e4119d
+2025-11-30 22:30:10,628 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 0a905954-dfe0-420f-acce-c9ce149a076c
+2025-11-30 22:30:11,472 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-11-30 22:30:11,472 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-30 22:30:13,569 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+2025-11-30 22:30:13,574 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: priority_agent, event id: df88717c-7b1f-44fd-a624-cd9b252601ad
+2025-11-30 22:30:13,574 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: details_agent, event id: 33fcab3d-4145-4b05-98a2-789b92907bab
+2025-11-30 22:30:13,574 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: assignee_agent, event id: a2eb0323-cd0d-4362-b4a3-bfdc71e4119d
+2025-11-30 22:30:13,574 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: deadline_agent, event id: 0a905954-dfe0-420f-acce-c9ce149a076c
+2025-11-30 22:30:14,480 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-11-30 22:30:14,480 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-11-30 22:30:18,078 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.

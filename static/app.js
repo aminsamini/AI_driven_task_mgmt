@@ -174,6 +174,13 @@ const app = {
         priorityContainer.innerHTML = '';
         priorityContainer.appendChild(priorityBadge);
 
+        const importanceBadge = document.createElement('span');
+        importanceBadge.className = `px-2 py-1 rounded text-xs font-medium ${app.getImportanceClass(task.importance)}`;
+        importanceBadge.textContent = `I${task.importance}`;
+        const importanceContainer = document.getElementById('modal-importance');
+        importanceContainer.innerHTML = '';
+        importanceContainer.appendChild(importanceBadge);
+
         document.getElementById('modal-deadline').textContent = task.deadline || 'No deadline';
         document.getElementById('modal-assignee').textContent = task.assignee_name || task.assignee;
         document.getElementById('modal-assigned-by').textContent = task.assign_by_name || 'Unknown';
@@ -333,6 +340,11 @@ const app = {
         if (priority >= 4) return 'bg-red-100 text-red-800';
         if (priority >= 3) return 'bg-yellow-100 text-yellow-800';
         return 'bg-green-100 text-green-800';
+    },
+    getImportanceClass: (importance) => {
+        if (importance >= 4) return 'bg-purple-100 text-purple-800';
+        if (importance >= 3) return 'bg-blue-100 text-blue-800';
+        return 'bg-gray-100 text-gray-800';
     },
     showToast: (message, type = 'success') => {
         const container = document.getElementById('toast-container');

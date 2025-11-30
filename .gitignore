@@ -11,3 +11,11 @@ __pycache__/
 # IDE
 .idea/
 .vscode/
+
+#logging
+app.log
+
+#documentation
+documentation/Example
+documentation/Rules
+
