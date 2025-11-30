@@ -90,9 +90,43 @@ const app = {
     },
     currentPage: 1,
     itemsPerPage: 6,
+    currentTab: 'assigned_to_me',
+
+    switchTab: (tab) => {
+        app.currentTab = tab;
+        app.currentPage = 1; // Reset to first page
+
+        // Update UI
+        const assignedToMeBtn = document.getElementById('tab-assigned-to-me');
+        const assignedByMeBtn = document.getElementById('tab-assigned-by-me');
+
+        if (tab === 'assigned_to_me') {
+            assignedToMeBtn.classList.add('border-primary', 'text-primary');
+            assignedToMeBtn.classList.remove('border-transparent', 'text-gray-500');
+            assignedByMeBtn.classList.remove('border-primary', 'text-primary');
+            assignedByMeBtn.classList.add('border-transparent', 'text-gray-500');
+        } else {
+            assignedByMeBtn.classList.add('border-primary', 'text-primary');
+            assignedByMeBtn.classList.remove('border-transparent', 'text-gray-500');
+            assignedToMeBtn.classList.remove('border-primary', 'text-primary');
+            assignedToMeBtn.classList.add('border-transparent', 'text-gray-500');
+        }
+
+        app.loadTasks();
+    },
 
     loadTasks: async () => {
-        const tasks = await api.getTasks();
+        const allTasks = await api.getTasks();
+
+        // Filter tasks based on current tab
+        const tasks = allTasks.filter(task => {
+            if (app.currentTab === 'assigned_to_me') {
+                return task.assignee == app.user.id;
+            } else {
+                return task.assign_by == app.user.id;
+            }
+        });
+
         const taskList = document.getElementById('task-list');
         taskList.innerHTML = '';
 
@@ -332,6 +366,10 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 
+    // Tab Listeners
+    document.getElementById('tab-assigned-to-me').addEventListener('click', () => app.switchTab('assigned_to_me'));
+    document.getElementById('tab-assigned-by-me').addEventListener('click', () => app.switchTab('assigned_by_me'));
+
     // Login Form
     document.getElementById('login-form').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -340,6 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             await api.login(email, password);
             app.init();
+            app.showToast('Login successful', 'success');
         } catch (err) {
             app.showToast(err.message, 'error');
         }
@@ -359,6 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             await api.register(data);
             app.init();
+            app.showToast('Registration successful', 'success');
         } catch (err) {
             app.showToast(err.message, 'error');
         }
