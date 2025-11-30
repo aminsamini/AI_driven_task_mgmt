@@ -145,27 +145,42 @@ const app = {
         document.getElementById('modal-assigned-by').textContent = task.assign_by_name || 'Unknown';
         document.getElementById('modal-description').textContent = task.description;
 
+        // Handle status changes
         const statusSelect = document.getElementById('modal-status');
-        statusSelect.value = task.status;
+        if (statusSelect) {
+            // Remove any existing event listeners to prevent duplicates
+            const newStatusSelect = statusSelect.cloneNode(true);
+            statusSelect.parentNode.replaceChild(newStatusSelect, statusSelect);
 
-        // Enable/Disable based on assignee
-        if (app.user && (app.user.id == task.assignee)) {
-            statusSelect.disabled = false;
-            statusSelect.onchange = async (e) => {
-                const newStatus = e.target.value;
-                try {
-                    await api.updateStatus(task.id, newStatus);
-                    app.showToast('Status updated successfully', 'success');
-                    task.status = newStatus; // Update local task object
-                    app.loadTasks(); // Reload list to reflect changes
-                } catch (err) {
-                    app.showToast(err.message, 'error');
-                    e.target.value = task.status; // Revert on error
-                }
-            };
-        } else {
-            statusSelect.disabled = true;
-            statusSelect.onchange = null;
+            newStatusSelect.value = task.status;
+
+            // Disable if not assignee
+            if (task.assignee != app.user.id) {
+                newStatusSelect.disabled = true;
+                newStatusSelect.title = "Only the assignee can change the status";
+                newStatusSelect.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                newStatusSelect.disabled = false;
+                newStatusSelect.title = "";
+                newStatusSelect.classList.remove('opacity-50', 'cursor-not-allowed');
+
+                newStatusSelect.addEventListener('change', async (e) => {
+                    const newStatus = e.target.value;
+                    try {
+                        await api.updateStatus(task.id, newStatus);
+                        // Update the local task object
+                        task.status = newStatus;
+                        // Refresh the task list to reflect changes
+                        await app.loadTasks();
+                        app.showToast(`Status updated to ${newStatus}`, 'success');
+                    } catch (error) {
+                        console.error('Failed to update status:', error);
+                        app.showToast('Failed to update status', 'error');
+                        // Revert the select value on error
+                        e.target.value = task.status;
+                    }
+                });
+            }
         }
 
         modal.classList.remove('hidden');
