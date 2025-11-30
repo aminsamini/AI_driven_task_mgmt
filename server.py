@@ -130,8 +130,10 @@ async def update_status(task_id: int, status_update: TaskStatusUpdate, request: 
     if not user_id:
         raise HTTPException(status_code=401, detail="Not authenticated")
     
-    success, message = update_task_status(task_id, status_update.status)
+    success, message = update_task_status(task_id, status_update.status, user_id)
     if not success:
+        if "Permission denied" in message:
+             raise HTTPException(status_code=403, detail=message)
         raise HTTPException(status_code=400, detail=message)
     
     return {"message": message}

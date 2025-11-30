@@ -120,7 +120,7 @@ def get_all_tasks():
     finally:
         session.close()
 
-def update_task_status(task_id, new_status):
+def update_task_status(task_id, new_status, user_id):
     """
     Updates the status of a task.
     """
@@ -130,6 +130,10 @@ def update_task_status(task_id, new_status):
         if not task:
             return False, "Task not found"
         
+        # Check if the user is the assignee
+        if str(task.assignee) != str(user_id):
+             return False, "Permission denied: You can only update tasks assigned to you."
+
         task.status = new_status
         task.updated_at = datetime.utcnow()
         session.commit()
