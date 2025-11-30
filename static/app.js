@@ -71,11 +71,21 @@ const app = {
             appContainer.classList.add('hidden');
         }
     },
+    currentPage: 1,
+    itemsPerPage: 6,
+
     loadTasks: async () => {
         const tasks = await api.getTasks();
         const taskList = document.getElementById('task-list');
         taskList.innerHTML = '';
-        tasks.forEach(task => {
+
+        // Pagination Logic
+        const startIndex = (app.currentPage - 1) * app.itemsPerPage;
+        const endIndex = startIndex + app.itemsPerPage;
+        const paginatedTasks = tasks.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(tasks.length / app.itemsPerPage);
+
+        paginatedTasks.forEach(task => {
             const div = document.createElement('div');
             div.className = 'bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition duration-200 border border-gray-100';
             div.innerHTML = `
@@ -97,6 +107,113 @@ const app = {
             `;
             taskList.appendChild(div);
         });
+
+        app.renderPagination(totalPages);
+    },
+
+    renderPagination: (totalPages) => {
+        const paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = '';
+
+        if (totalPages <= 1) return;
+
+        const nav = document.createElement('nav');
+        nav.className = 'isolate inline-flex -space-x-px rounded-md shadow-sm';
+        nav.setAttribute('aria-label', 'Pagination');
+
+        // Helper to create button
+        const createButton = (text, onClick, disabled, isActive, isFirst, isLast, isIcon = false) => {
+            const btn = document.createElement('a');
+            btn.href = '#';
+            btn.onclick = (e) => {
+                e.preventDefault();
+                if (!disabled && onClick) onClick();
+            };
+
+            let baseClasses = 'relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0';
+
+            if (isIcon) {
+                baseClasses = 'relative inline-flex items-center px-2 py-2 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0';
+            }
+
+            if (isActive) {
+                baseClasses = 'relative z-10 inline-flex items-center bg-blue-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600';
+            } else if (disabled) {
+                baseClasses += ' text-gray-300 cursor-not-allowed hover:bg-white';
+            } else {
+                baseClasses += ' text-gray-900';
+            }
+
+            if (isFirst) baseClasses += ' rounded-l-md';
+            if (isLast) baseClasses += ' rounded-r-md';
+
+            btn.className = baseClasses;
+
+            if (isIcon) {
+                btn.innerHTML = text; // Expecting SVG HTML
+            } else {
+                btn.textContent = text;
+            }
+
+            return btn;
+        };
+
+        // Previous Button
+        nav.appendChild(createButton(
+            `<span class="sr-only">Previous</span>
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+            </svg>`,
+            () => {
+                if (app.currentPage > 1) {
+                    app.currentPage--;
+                    app.loadTasks();
+                }
+            },
+            app.currentPage === 1,
+            false,
+            true,
+            false,
+            true
+        ));
+
+        // Page Numbers
+        // Simple logic: show all pages for now. 
+        // TODO: Implement complex logic (1, 2, ..., 9, 10) if pages > 7
+        for (let i = 1; i <= totalPages; i++) {
+            nav.appendChild(createButton(
+                i,
+                () => {
+                    app.currentPage = i;
+                    app.loadTasks();
+                },
+                false,
+                app.currentPage === i,
+                false,
+                false
+            ));
+        }
+
+        // Next Button
+        nav.appendChild(createButton(
+            `<span class="sr-only">Next</span>
+            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+            </svg>`,
+            () => {
+                if (app.currentPage < totalPages) {
+                    app.currentPage++;
+                    app.loadTasks();
+                }
+            },
+            app.currentPage === totalPages,
+            false,
+            false,
+            true,
+            true
+        ));
+
+        paginationContainer.appendChild(nav);
     },
     getPriorityClass: (priority) => {
         if (priority >= 4) return 'bg-red-100 text-red-800';
