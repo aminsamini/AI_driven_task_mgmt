@@ -31,3 +31,4 @@
 | dehi_0026 | 2025-11-29 20:30 | `tools/task_interaction.py`, `main.py` | Implemented interactive task management tool `/show_my_tasks` with list, detail, and status update views. | N/A |
 | dehi_0027 | 2025-11-29 21:55 | `main.py` | Implemented `/help` command handler to display available commands. | N/A |
 | dehi_0028 | 2025-11-30 16:00 | `server.py`, `static/`, `tools/task_tools.py`, `requirements.txt` | Implemented simple web UI using FastAPI, including auth and task management. | deim_0013 |
+| dehi_0029 | 2025-11-30 19:10 | `tools/task_tools.py`, `static/app.js` | Display Assignee Name Instead of ID in Task Cards. Modified backend to join User table and frontend to display name. | deim_0014 |

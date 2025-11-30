@@ -72,15 +72,24 @@ def get_all_tasks():
     """
     session = SessionLocal()
     try:
-        tasks = session.query(Task).all()
+        # Perform an outer join to get task details along with assignee's name
+        results = session.query(Task, User).outerjoin(User, Task.assignee == User.id).all()
+        
         task_list = []
-        for task in tasks:
+        for task, user in results:
+            assignee_name = "Unassigned"
+            if user:
+                assignee_name = f"{user.first_name} {user.last_name}"
+            elif task.assignee:
+                assignee_name = task.assignee # Fallback to ID if user not found
+
             task_list.append({
                 "id": task.id,
                 "title": task.title,
                 "description": task.description,
                 "assign_by": task.assign_by,
                 "assignee": task.assignee,
+                "assignee_name": assignee_name,
                 "importance": task.importance,
                 "priority": task.priority,
                 "deadline": task.deadline.strftime("%Y-%m-%d %H:%M:%S") if task.deadline else None,

@@ -4,58 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management System</title>
+    <title>AI Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/static/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#64748b',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body>
-    <div class="container">
-        <div id="auth-container" class="card">
-            <h1>Welcome</h1>
+<body class="bg-gray-100 font-sans text-gray-900">
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
 
-            <form id="login-form">
-                <h2>Login</h2>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-                <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+    <div class="min-h-screen flex items-center justify-center p-4">
+
+        <!-- Auth Container -->
+        <div id="auth-container" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+            <h1 class="text-3xl font-bold text-center mb-6 text-primary">AI Task Manager</h1>
+
+            <!-- Login Form -->
+            <form id="login-form" class="space-y-4">
+                <h2 class="text-xl font-semibold mb-4">Login</h2>
+                <input type="email" name="email" placeholder="Email" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                <input type="password" name="password" placeholder="Password" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                <button type="submit"
+                    class="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200">Login</button>
+                <p class="text-center text-sm text-gray-600 mt-4">
+                    Don't have an account? <a href="#" id="show-register"
+                        class="text-primary hover:underline">Register</a>
+                </p>
             </form>
 
-            <form id="register-form" class="hidden">
-                <h2>Register</h2>
-                <input type="text" name="first_name" placeholder="First Name" required>
-                <input type="text" name="last_name" placeholder="Last Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <input type="text" name="position" placeholder="Job Position">
-                <textarea name="job_description" placeholder="Job Description (Optional)"></textarea>
-                <button type="submit">Register</button>
-                <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+            <!-- Register Form -->
+            <form id="register-form" class="space-y-4 hidden">
+                <h2 class="text-xl font-semibold mb-4">Register</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" name="first_name" placeholder="First Name" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <input type="text" name="last_name" placeholder="Last Name" required
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                <input type="email" name="email" placeholder="Email" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                <input type="password" name="password" placeholder="Password" required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                <input type="text" name="position" placeholder="Job Position (Optional)"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                <textarea name="job_description" placeholder="Job Description (Optional)"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                <button type="submit"
+                    class="w-full bg-primary text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200">Register</button>
+                <p class="text-center text-sm text-gray-600 mt-4">
+                    Already have an account? <a href="#" id="show-login" class="text-primary hover:underline">Login</a>
+                </p>
             </form>
         </div>
 
-        <div id="app-container" class="hidden">
-            <div class="card">
-                <div class="task-header">
-                    <h2>My Tasks</h2>
-                    <div>
-                        <span id="user-info"></span>
-                        <button id="logout-btn">Logout</button>
-                    </div>
-                </div>
+        <!-- App Container -->
+        <div id="app-container" class="hidden w-full max-w-4xl space-y-6">
 
-                <form id="task-form">
-                    <textarea name="description" placeholder="Describe a new task..." required></textarea>
-                    <button type="submit">Create Task with AI</button>
+            <!-- Header -->
+            <div class="bg-white p-6 rounded-xl shadow-md flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-800">My Tasks</h2>
+                <div class="flex-col items-center justify-center gap-4">
+                    <span id="user-info" class="text-sm text-gray-700"></span>
+                    <button id="logout-btn"
+                        class="px-4 py-2 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition duration-200">Logout</button>
+                </div>
+            </div>
+
+            <!-- Create Task -->
+            <div class="bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-lg font-semibold mb-4">Create New Task</h3>
+                <form id="task-form" class="flex-col gap-4">
+                    <input type="text" name="description"
+                        placeholder="Describe the task (e.g., 'Update the homepage banner by Friday')" required
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                    <button type="submit"
+                        class="bg-primary text-white px-6 my-2 py-2 rounded-lg hover:bg-blue-600 transition duration-200 whitespace-nowrap">Create
+                        with AI</button>
                 </form>
+            </div>
 
-                <div id="task-list">
-                    <!-- Tasks will be loaded here -->
-                </div>
+            <!-- Task List -->
+            <div id="task-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Tasks will be injected here -->
             </div>
         </div>
     </div>
-    <div id="toast-container"></div>
     <script src="/static/app.js"></script>
 </body>
 
