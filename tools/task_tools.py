@@ -1,6 +1,7 @@
 from database.connection import SessionLocal
 from database.models import User, Task
 from datetime import datetime
+from sqlalchemy.orm import aliased
 
 def get_all_candidates():
     """
@@ -72,22 +73,36 @@ def get_all_tasks():
     """
     session = SessionLocal()
     try:
-        # Perform an outer join to get task details along with assignee's name
-        results = session.query(Task, User).outerjoin(User, Task.assignee == User.id).all()
+        # Alias for assignee and assigner
+        Assignee = aliased(User)
+        Assigner = aliased(User)
+
+        # Perform joins to get both assignee and assigner names
+        results = session.query(Task, Assignee, Assigner)\
+            .outerjoin(Assignee, Task.assignee == Assignee.id)\
+            .outerjoin(Assigner, Task.assign_by == Assigner.id)\
+            .all()
         
         task_list = []
-        for task, user in results:
+        for task, assignee, assigner in results:
             assignee_name = "Unassigned"
-            if user:
-                assignee_name = f"{user.first_name} {user.last_name}"
+            if assignee:
+                assignee_name = f"{assignee.first_name} {assignee.last_name}"
             elif task.assignee:
-                assignee_name = task.assignee # Fallback to ID if user not found
+                assignee_name = task.assignee
+
+            assign_by_name = "Unknown"
+            if assigner:
+                assign_by_name = f"{assigner.first_name} {assigner.last_name}"
+            elif task.assign_by:
+                assign_by_name = task.assign_by
 
             task_list.append({
                 "id": task.id,
                 "title": task.title,
                 "description": task.description,
                 "assign_by": task.assign_by,
+                "assign_by_name": assign_by_name,
                 "assignee": task.assignee,
                 "assignee_name": assignee_name,
                 "importance": task.importance,
@@ -102,5 +117,25 @@ def get_all_tasks():
     except Exception as e:
         print(f"Error fetching tasks: {e}")
         return []
+    finally:
+        session.close()
+
+def update_task_status(task_id, new_status):
+    """
+    Updates the status of a task.
+    """
+    session = SessionLocal()
+    try:
+        task = session.query(Task).filter(Task.id == task_id).first()
+        if not task:
+            return False, "Task not found"
+        
+        task.status = new_status
+        task.updated_at = datetime.utcnow()
+        session.commit()
+        return True, "Status updated successfully"
+    except Exception as e:
+        session.rollback()
+        return False, str(e)
     finally:
         session.close()

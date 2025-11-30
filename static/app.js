@@ -47,6 +47,23 @@ const api = {
         const response = await fetch('/api/tasks');
         if (!response.ok) return [];
         return response.json();
+    },
+    updateStatus: async (taskId, status) => {
+        const response = await fetch(`/api/tasks/${taskId}/status`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+        if (!response.ok) {
+            const errorText = await response.text();
+            try {
+                const errorJson = JSON.parse(errorText);
+                throw new Error(errorJson.detail || errorText);
+            } catch (e) {
+                throw new Error(errorText || 'Failed to update status');
+            }
+        }
+        return response.json();
     }
 };
 
@@ -125,7 +142,31 @@ const app = {
 
         document.getElementById('modal-deadline').textContent = task.deadline || 'No deadline';
         document.getElementById('modal-assignee').textContent = task.assignee_name || task.assignee;
+        document.getElementById('modal-assigned-by').textContent = task.assign_by_name || 'Unknown';
         document.getElementById('modal-description').textContent = task.description;
+
+        const statusSelect = document.getElementById('modal-status');
+        statusSelect.value = task.status;
+
+        // Enable/Disable based on assignee
+        if (app.user && (app.user.id == task.assignee)) {
+            statusSelect.disabled = false;
+            statusSelect.onchange = async (e) => {
+                const newStatus = e.target.value;
+                try {
+                    await api.updateStatus(task.id, newStatus);
+                    app.showToast('Status updated successfully', 'success');
+                    task.status = newStatus; // Update local task object
+                    app.loadTasks(); // Reload list to reflect changes
+                } catch (err) {
+                    app.showToast(err.message, 'error');
+                    e.target.value = task.status; // Revert on error
+                }
+            };
+        } else {
+            statusSelect.disabled = true;
+            statusSelect.onchange = null;
+        }
 
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
@@ -204,8 +245,6 @@ const app = {
         ));
 
         // Page Numbers
-        // Simple logic: show all pages for now. 
-        // TODO: Implement complex logic (1, 2, ..., 9, 10) if pages > 7
         for (let i = 1; i <= totalPages; i++) {
             nav.appendChild(createButton(
                 i,
@@ -332,35 +371,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('task-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const description = e.target.description.value;
-        const btn = e.target.querySelector('button');
-        const originalText = btn.textContent;
+        const button = e.target.querySelector('button');
+        const originalText = button.textContent;
 
-        btn.textContent = 'Processing...';
-        btn.disabled = true;
+        button.disabled = true;
+        button.textContent = 'Creating...';
 
         try {
-            const result = await api.createTask(description);
-            // Result is { message: { status: 'success', message: '...', assignee_name: '...', task_title: '...' } }
-            // Wait, server returns { message: result_from_workflow }
-            // If workflow returns dict, server returns { message: dict }
-            // So result.message is the dict.
-
-            const data = result.message;
-
-            if (typeof data === 'string') {
-                app.showToast(data, 'success');
-            } else {
-                app.showToast(`Task "${data.task_title}" assigned to ${data.assignee_name} successfully`, 'success');
-            }
-
+            await api.createTask(description);
             e.target.reset();
+            app.showToast('Task created successfully');
             app.loadTasks();
         } catch (err) {
-            console.error('Task creation error:', err);
-            app.showToast(`Error: ${err.message}`, 'error');
+            app.showToast(err.message, 'error');
         } finally {
-            btn.textContent = originalText;
-            btn.disabled = false;
+            button.disabled = false;
+            button.textContent = originalText;
         }
     });
 });

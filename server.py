@@ -7,7 +7,7 @@ from typing import Optional
 from starlette.middleware.sessions import SessionMiddleware
 from database.models import User
 from tools import auth
-from tools.task_tools import get_all_tasks
+from tools.task_tools import get_all_tasks, update_task_status
 from agents.task_agents import TaskCreationWorkflow
 import uvicorn
 import os
@@ -50,6 +50,9 @@ class RegisterRequest(BaseModel):
 
 class TaskRequest(BaseModel):
     description: str
+
+class TaskStatusUpdate(BaseModel):
+    status: str
 
 @app.post("/api/login")
 async def login(request: Request, login_data: LoginRequest):
@@ -120,6 +123,18 @@ async def list_tasks(request: Request):
     
     tasks = get_all_tasks()
     return tasks
+
+@app.patch("/api/tasks/{task_id}/status")
+async def update_status(task_id: int, status_update: TaskStatusUpdate, request: Request):
+    user_id = request.session.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    success, message = update_task_status(task_id, status_update.status)
+    if not success:
+        raise HTTPException(status_code=400, detail=message)
+    
+    return {"message": message}
 
 @app.get("/")
 async def read_root():
