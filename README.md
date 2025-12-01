@@ -48,6 +48,8 @@ To get started with the AI Task Manager, follow these simple steps:
     python -c "from database import init_db; init_db()"
     ```
 
+**Note:** For the AI agent to work as expected, it is recommended to populate the database with at least three users, preferably with different job positions. A greater diversity of user roles will lead to better and more accurate results.
+
 ## How to Run
 
 You can interact with the AI Task Manager through either the web interface or the command-line interface (CLI).
