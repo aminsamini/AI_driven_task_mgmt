@@ -73,3 +73,4 @@ python cli.py
 ```
 
 The CLI will guide you through the available commands for user and task management.
+
