@@ -5,6 +5,18 @@ from tools.task_tools import get_all_candidates, save_task_to_db
 from datetime import datetime
 import json
 import asyncio
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
+from google.genai.errors import ServerError
+
+# Retry configuration
+# Retry on ServerError (which includes 503)
+# Wait exponentially: 1s, 2s, 4s, ... up to 10s
+# Stop after 5 attempts
+RETRY_CONFIG = {
+    "retry": retry_if_exception_type(ServerError),
+    "wait": wait_exponential(multiplier=1, min=1, max=10),
+    "stop": stop_after_attempt(5)
+}
 
 # 1. Deadline Agent
 deadline_agent = Agent(
@@ -86,12 +98,16 @@ class TaskCreationWorkflow:
     def __init__(self, user_id):
         self.user_id = user_id
         self.session_service = InMemorySessionService()
-        
+    
+    @retry(**RETRY_CONFIG)
+    async def _run_agent(self, runner, prompt):
+        return await runner.run_debug(prompt)
+
     async def run(self, user_input):
         # 1. Predict Deadline
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         deadline_runner = Runner(agent=deadline_agent, session_service=self.session_service, app_name="task_gen")
-        deadline_resp = await deadline_runner.run_debug(f"Task: {user_input}. Current time: {current_time}")
+        deadline_resp = await self._run_agent(deadline_runner, f"Task: {user_input}. Current time: {current_time}")
         deadline_str = extract_text(deadline_resp)
         try:
             deadline = datetime.strptime(deadline_str, "%Y-%m-%d %H:%M:%S")
@@ -104,7 +120,7 @@ class TaskCreationWorkflow:
         candidates = get_all_candidates()
         candidates_str = json.dumps(candidates, indent=2)
         assignee_runner = Runner(agent=assignee_agent, session_service=self.session_service, app_name="task_gen")
-        assignee_resp = await assignee_runner.run_debug(f"Task: {user_input}\nCandidates:\n{candidates_str}")
+        assignee_resp = await self._run_agent(assignee_runner, f"Task: {user_input}\nCandidates:\n{candidates_str}")
         assignee_id = extract_text(assignee_resp)
         
         if assignee_id == 'None' or not any(c['id'] == assignee_id for c in candidates):
@@ -114,7 +130,7 @@ class TaskCreationWorkflow:
 
         # 3. Generate Details
         details_runner = Runner(agent=details_agent, session_service=self.session_service, app_name="task_gen")
-        details_resp = await details_runner.run_debug(f"Task: {user_input}")
+        details_resp = await self._run_agent(details_runner, f"Task: {user_input}")
         details_text = extract_text(details_resp)
         try:
             details_json = json.loads(details_text.replace('```json', '').replace('```', ''))
@@ -127,7 +143,7 @@ class TaskCreationWorkflow:
 
         # 4. Predict Priority
         priority_runner = Runner(agent=priority_agent, session_service=self.session_service, app_name="task_gen")
-        priority_resp = await priority_runner.run_debug(f"Task: {user_input}")
+        priority_resp = await self._run_agent(priority_runner, f"Task: {user_input}")
         priority_text = extract_text(priority_resp)
         try:
             priority_json = json.loads(priority_text.replace('```json', '').replace('```', ''))
@@ -140,7 +156,7 @@ class TaskCreationWorkflow:
 
         # 5. Make Suggestions
         suggestion_runner = Runner(agent=suggestion_agent, session_service=self.session_service, app_name="task_gen")
-        suggestion_resp = await suggestion_runner.run_debug(f"Task: {user_input}")
+        suggestion_resp = await self._run_agent(suggestion_runner, f"Task: {user_input}")
         suggestions = extract_text(suggestion_resp)
 
         # 6. Save to DB
